@@ -1023,6 +1023,10 @@ var Qb=[Ik,Zh,_h,Qj,Qi,Pi,Ri,Ag,sg,qg,rg,yg,kh,jh,Oi,Mj];var Rb=[Jk,ki,ji,gi];va
 		return false;
 	};
 */
+   /*This function can be overwritten from outside the aframe-ar framework, to
+    * opt in a filter that runs before the image is given to the tacker
+    */
+   ARController.prototype.prefilter = function(data) {return data};
 	
 	ARController.prototype._copyImageToHeap = function(image) {
 		if (!image) {
@@ -1045,6 +1049,7 @@ var Qb=[Ik,Zh,_h,Qj,Qi,Pi,Ri,Ag,sg,qg,rg,yg,kh,jh,Oi,Mj];var Rb=[Jk,ki,ji,gi];va
 
 		var imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
 		var data = imageData.data;
+        data = this.prefilter(data)
 
 		if (this.dataHeap) {
 			this.dataHeap.set( data );
